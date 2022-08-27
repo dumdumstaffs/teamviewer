@@ -37,7 +37,7 @@ export default function Account() {
                         </div>
 
                         {/* comments */}
-                        <p className="text-sm mt-4 text-gray-600 dark:text-zinc-200">You have a total of {account.balance.toLocaleString()} from {account.stocks.length} accounts.</p>
+                        <p className="text-sm mt-4 text-gray-600 dark:text-zinc-200">You have a total of {account.balance().toLocaleString()} from {account.stocks.length} accounts.</p>
                     </div>
 
                     <div className="w-full h-96 rounded-md overflow-hidden mt-12">
