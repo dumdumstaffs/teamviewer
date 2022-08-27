@@ -37,7 +37,7 @@ export function Layout({ title, description, mode, children }: Props) {
 
         return () => clearTimeout(displayTimeout)
 
-    }, [mode, isReady, account])
+    }, [router, mode, isReady, account])
 
     return (
         <Fragment>

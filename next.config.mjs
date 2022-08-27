@@ -12,5 +12,11 @@ function defineNextConfig(config) {
 export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
-  env: env
+  env: env,
+  experimental: {
+    // for next export
+    images: {
+      unoptimized: true
+    }
+  },
 });

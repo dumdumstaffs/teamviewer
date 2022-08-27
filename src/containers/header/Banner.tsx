@@ -1,6 +1,7 @@
 import { Diamond } from '@/components/icons/Diamond'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
 import { useAccount } from '@/hooks/use-account'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -27,7 +28,7 @@ export function Banner() {
             <div className="shrink-0 hidden lg:flex items-center space-x-4 pl-2">
                 <p className="font-medium text-xs hover:bg-gray-100 dark:hover:bg-zinc-800 p-1 rounded-md">English</p>
                 <p className="font-medium text-xs flex items-center space-x-2 hover:bg-gray-100 dark:hover:bg-zinc-800 p-1 rounded-md">
-                    <img src="https://s2.coinmarketcap.com/static/cloud/img/fiat-flags/USD.svg" alt="usd" width={12} height={12} />
+                    <Image src="https://s2.coinmarketcap.com/static/cloud/img/fiat-flags/USD.svg" alt="usd" width={12} height={12} />
                     <span>USD</span>
                 </p>
                 <ThemeSwitcher />

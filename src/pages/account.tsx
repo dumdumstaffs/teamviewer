@@ -58,7 +58,7 @@ type AssetCardProps = {
 const AssetCard = ({ name, icon, price }: AssetCardProps) => (
     <div className="flex flex-col items-center justify-between px-2 py-5 rounded-xl bg-gray-50 dark:bg-zinc-800 transition-all sm:hover:scale-105 cursor-pointer">
         <div className="mb-3">
-            <Image src={icon} width={56} height={56} className="rounded-full" />
+            <Image src={icon} width={56} height={56} alt={name} className="rounded-full" />
         </div>
         <div className="flex flex-col items-center text-sm">
             <p>{name}</p>

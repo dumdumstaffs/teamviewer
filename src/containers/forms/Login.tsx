@@ -72,7 +72,7 @@ export function Login() {
 
             <div className="flex flex-col items-center py-4">
                 <Link href={{ pathname: "/", query: { view: "register" } }}>
-                    <a className="text-xs text-gray-600 dark:text-zinc-300">Don't have an account? Register</a>
+                    <a className="text-xs text-gray-600 dark:text-zinc-300">{"Don't have an account? Register"}</a>
                 </Link>
             </div>
         </form>
