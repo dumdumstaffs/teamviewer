@@ -18,7 +18,7 @@ export function Nav({ toggleSidebar }: NavProps) {
                     </a>
                 </Link>
                 <ul className="hidden lg:flex space-x-8 text-sm font-semibold">
-                    <li><a href="">Cryptocurrencies</a></li>
+                    <li><a href="">Stocks</a></li>
                     <li><a href="">Exchanges</a></li>
                     <li><a href="">Community</a></li>
                     <li><a href="">Product</a></li>

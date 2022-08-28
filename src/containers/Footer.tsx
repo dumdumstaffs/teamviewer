@@ -16,31 +16,31 @@ export function Footer() {
             <div className="">
                 <h3 className="text-sm sm:text-base font-medium">Products</h3>
                 <ul className="flex flex-col mt-6 space-y-4 text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
-                    <li><a href="">Blockchain Explorer</a></li>
-                    <li><a href="">Crypto API</a></li>
-                    <li><a href="">Crypto Indices</a></li>
-                    <li><a href="">Jobs Board</a></li>
-                    <li><a href="">Sitemap</a></li>
-                </ul>
-            </div>
-            <div className="">
-                <h3 className="text-sm sm:text-base font-medium">Products</h3>
-                <ul className="flex flex-col mt-6 space-y-4 text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
-                    <li><a href="">Blockchain Explorer</a></li>
-                    <li><a href="">Crypto API</a></li>
-                    <li><a href="">Crypto Indices</a></li>
-                    <li><a href="">Jobs Board</a></li>
-                    <li><a href="">Sitemap</a></li>
+                    <li><a href="https://www.tradingview.com/chart/">Charts</a></li>
+                    <li><a href="https://www.tradingview.com/screener/">Stocks Screener</a></li>
+                    <li><a href="https://www.tradingview.com/forex-screener/">Forex Screener</a></li>
+                    <li><a href="https://www.tradingview.com/crypto-screener/">Crypto Screener</a></li>
+                    <li><a href="https://www.tradingview.com/sparks/">Sparks</a></li>
                 </ul>
             </div>
             <div className="">
                 <h3 className="text-sm sm:text-base font-medium">Tokenomics</h3>
                 <ul className="flex flex-col mt-6 space-y-4 text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
-                    <li><a href="">Disclaimer</a></li>
-                    <li><a href="">Methodology</a></li>
-                    <li><a href="">Terms of use</a></li>
-                    <li><a href="">Request Form</a></li>
-                    <li><a href="">FAQ</a></li>
+                    <li><a href="https://www.tradingview.com/disclaimer/">Disclaimer</a></li>
+                    <li><a href="https://www.tradingview.com/features/">Features</a></li>
+                    <li><a href="https://www.tradingview.com/bounty/">Security vulnerability</a></li>
+                    <li><a href="https://www.tradingview.com/manifesto/">Manifesto</a></li>
+                    <li><a href="https://www.tradingview.com/careers/">Careers</a></li>
+                </ul>
+            </div>
+            <div className="">
+                <h3 className="text-sm sm:text-base font-medium">Community</h3>
+                <ul className="flex flex-col mt-6 space-y-4 text-xs sm:text-sm text-gray-500 dark:text-zinc-400">
+                    <li><a href="https://www.tradingview.com/ideas/">Ideas</a></li>
+                    <li><a href="https://www.tradingview.com/scripts/">Scripts</a></li>
+                    <li><a href="https://www.tradingview.com/streams/">Streams</a></li>
+                    <li><a href="https://www.tradingview.com/house-rules/">House Rules</a></li>
+                    <li><a href="https://www.tradingview.com/moderators/">Moderators</a></li>
                 </ul>
             </div>
         </footer>

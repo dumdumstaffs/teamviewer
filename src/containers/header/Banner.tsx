@@ -17,13 +17,13 @@ export function Banner() {
     return (
         <div className="flex justify-between items-center h-10 px-4 md:px-8 border-b dark:bg-zinc-900 dark:border-zinc-800">
             <div className="flex space-x-4 text-xxs text-gray-700 dark:text-zinc-200 overflow-x-scroll no-scrollbar">
-                <p className="shrink-0">Cryptos: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Market: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Prices: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Showcase: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Tickers: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Gas Fees: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
-                <p className="shrink-0">Dominance: <span className="text-blue-600 dark:text-blue-500">0.0096</span></p>
+                <p className="shrink-0">Cryptos: <span className="text-blue-600 dark:text-blue-500">0.093308</span></p>
+                <p className="shrink-0">Market: <span className="text-blue-600 dark:text-blue-500">0.622142</span></p>
+                <p className="shrink-0">Prices: <span className="text-blue-600 dark:text-blue-500">0.145487</span></p>
+                <p className="shrink-0">Showcase: <span className="text-blue-600 dark:text-blue-500">0.059282</span></p>
+                <p className="shrink-0">Tickers: <span className="text-blue-600 dark:text-blue-500">0.185203</span></p>
+                <p className="shrink-0">Gas Fees: <span className="text-blue-600 dark:text-blue-500">0.530292</span></p>
+                <p className="shrink-0">Dominance: <span className="text-blue-600 dark:text-blue-500">0.132352</span></p>
             </div>
             <div className="shrink-0 hidden lg:flex items-center space-x-4 pl-2">
                 <p className="font-medium text-xs hover:bg-gray-100 dark:hover:bg-zinc-800 p-1 rounded-md">English</p>
