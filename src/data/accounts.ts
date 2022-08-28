@@ -1,4 +1,4 @@
-import { apple, bluerock, microsoft, Stock, tesla } from "./stocks"
+import { apple, bluerock, dowjones, microsoft, Stock, tesla } from "./stocks"
 
 export type Account = {
     id: string,
@@ -26,12 +26,12 @@ const alfred: Account = {
 const khalif: Account = {
     id: "BP12-AUD",
     count: 4,
-    holders: ["Khalif Crocker", "Dean Pipers"],
+    holders: ["Khalif Crocker", "Queen Sophia"],
     stocks: [
         { ...apple, price: 3120 },
         { ...tesla, price: 6002 },
         { ...bluerock, price: 276 },
-        { ...microsoft, price: 900 },
+        { ...dowjones, price: 900 },
     ],
     balance() {
         return this.stocks.reduce((acc, curr) => acc + curr.price, 0)
