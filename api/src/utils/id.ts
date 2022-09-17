@@ -1,3 +1,5 @@
-import { nanoid } from "nanoid"
+import { customAlphabet } from "nanoid"
 
-export const generateId = () => nanoid(4).toUpperCase() + "-" + nanoid(6).toUpperCase()
+const nanoid = customAlphabet('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', 10)
+
+export const generateId = () => nanoid(4) + "-" + nanoid(6)
