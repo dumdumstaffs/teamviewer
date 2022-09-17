@@ -9,10 +9,7 @@ export interface UserModel extends Model<UserDocument> { }
 const stocksSchema = new Schema<IStock>({
     name: String,
     profit: Number,
-    symbol: {
-        type: String,
-        unique: true,
-    },
+    symbol: String,
     overview: String,
 }, {
     _id: false,
