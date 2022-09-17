@@ -4,7 +4,7 @@ import { Header } from "@/containers/header/Header";
 import { useAccount } from "@/hooks/use-account";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Fragment, ReactNode, useEffect, useState } from "react";
+import { Fragment, ReactNode } from "react";
 
 type Props = {
     title?: string,
@@ -15,34 +15,23 @@ type Props = {
 
 export function Layout({ title, description, mode, children }: Props) {
     const router = useRouter()
-    const [display, setDisplay] = useState(false)
 
-    const { account, isReady } = useAccount()
+    const account = useAccount()
 
-    useEffect(() => {
-        if (!isReady) return
+    if (mode === "auth" && account.isError) {
+        router.push("/")
+        return null
+    }
 
-        if (mode === "auth") {
-            if (!account) router.push("/")
-            else setDisplay(true)
-        }
-        if (mode === "guest") {
-            if (account) router.push("/account")
-            else setDisplay(true)
-        }
-
-        const displayTimeout = setTimeout(() => {
-            setDisplay(true)
-        }, 1000)
-
-        return () => clearTimeout(displayTimeout)
-
-    }, [router, mode, isReady, account])
+    if (mode === "guest" && account.isSuccess) {
+        router.push("/account")
+        return null
+    }
 
     return (
         <Fragment>
             <Head>
-                <title>{title || "TeamViewer - Cryptocurrency"}</title>
+                <title>{title}</title>
                 <meta name="description" content={description || "Cryptocurrency & Stocks"} />
                 <link rel="shortcut icon" type="image/png" href="/favicon.png" />
                 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0" id="viewport" />
@@ -50,11 +39,16 @@ export function Layout({ title, description, mode, children }: Props) {
 
             <Header />
             <main>
-                {display ? children : (
+                {account.isLoading ? (
                     <div className="flex items-center justify-center w-full h-[70vh]">
                         <Spinner className="w-10 h-10 text-blue-600" />
                     </div>
-                )}
+                ) : (mode === "auth" && account.isSuccess)
+                    ? children
+                    : (mode === "guest" && account.isError)
+                        ? children
+                        : null
+                }
             </main>
             <Footer />
         </Fragment>

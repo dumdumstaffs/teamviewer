@@ -2,7 +2,7 @@ import { ErrorBanner } from '@/components/forms/ErrorBanner'
 import { Logo } from '@/components/icons/Logo'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import * as accounts from '@/services/accounts'
+import { useRegister } from '@/hooks/use-account'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from 'next/link'
 import { useId, useState } from 'react'
@@ -18,22 +18,20 @@ type RegisterSchema = z.infer<typeof registerSchema>
 type FormError = "invalid_credentials" | "duplicate_credentials" | "operation_failed" | null
 
 export function Register() {
+    const id = useId()
+    const [error, setError] = useState<FormError>(null)
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema)
     })
 
-    const id = useId()
-    const [error, setError] = useState<FormError>(null)
+    const registerMutation = useRegister()
 
     const handleRegister = handleSubmit(async ({ accountId }) => {
-        try {
-            const account = await accounts.register(accountId)
-            if (account) return setError("duplicate_credentials")
-
-            setError("invalid_credentials")
-        } catch (err) {
-            setError("operation_failed")
-        }
+        registerMutation.mutate(accountId, {
+            onError() {
+                setError("operation_failed")
+            }
+        })
     })
 
     return (
@@ -65,7 +63,7 @@ export function Register() {
                 />
             </div>
 
-            <Button loading={isSubmitting} className="w-full block py-3 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">Register</Button>
+            <Button loading={isSubmitting || registerMutation.isLoading} className="w-full block py-3 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">Register</Button>
 
             <div className="flex flex-col items-center py-4">
                 <Link href={{ pathname: "/", query: { view: "login" } }}>

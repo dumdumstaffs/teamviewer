@@ -2,8 +2,7 @@ import { ErrorBanner } from '@/components/forms/ErrorBanner'
 import { Logo } from '@/components/icons/Logo'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
-import { useAccount } from '@/hooks/use-account'
-import * as accounts from '@/services/accounts'
+import { useLogin } from '@/hooks/use-account'
 import { zodResolver } from "@hookform/resolvers/zod"
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -20,26 +19,24 @@ type LoginSchema = z.infer<typeof loginSchema>
 type LoginError = "invalid_credentials" | "operation_failed" | null
 
 export function Login() {
+    const id = useId()
     const router = useRouter()
+    const [error, setError] = useState<LoginError>(null)
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema)
     })
 
-    const id = useId()
-    const { signIn } = useAccount()
-    const [error, setError] = useState<LoginError>(null)
+    const loginMutation = useLogin()
 
     const handleLogin = handleSubmit(async ({ accountId }) => {
-        try {
-            const account = await accounts.login(accountId)
-            if (!account) return setError("invalid_credentials")
-
-            signIn(account)
-
-            router.push("/account")
-        } catch (err) {
-            setError("operation_failed")
-        }
+        loginMutation.mutate(accountId, {
+            onSuccess() {
+                router.push("/account")
+            },
+            onError() {
+                setError("invalid_credentials")
+            }
+        })
     })
 
     return (
@@ -68,7 +65,7 @@ export function Login() {
                 />
             </div>
 
-            <Button loading={isSubmitting} className="w-full py-3 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">Log In</Button>
+            <Button loading={isSubmitting || loginMutation.isLoading} className="w-full py-3 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">Log In</Button>
 
             <div className="flex flex-col items-center py-4">
                 <Link href={{ pathname: "/", query: { view: "register" } }}>

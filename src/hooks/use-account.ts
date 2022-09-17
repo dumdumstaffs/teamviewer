@@ -1,15 +1,40 @@
-import { Account } from "@/data/accounts"
 import * as accounts from "@/services/accounts"
-import { useCallback } from "react"
-import { useLocalStorage } from "./use-local-storage"
+import { useMutation, useQuery, useQueryClient } from "react-query"
 
-export const useAccount = () => {
-    const [id, setId, clearStorage, isReady] = useLocalStorage<string>("account")
+const queryKey = ["account"]
 
-    const account = accounts.get(id || "")
+export const useAccount = () => useQuery(queryKey, accounts.getUser, {
+    retry: false
+})
 
-    const signIn = useCallback((acc: Account) => setId(acc.id), [setId])
-    const signOut = useCallback(() => clearStorage(), [clearStorage])
+export const useLogin = () => {
+    const queryClient = useQueryClient()
 
-    return { account, signIn, signOut, isReady }
+    return useMutation(accounts.login, {
+        onMutate(id) {
+            localStorage.setItem("token", id)
+        },
+        onSuccess() {
+            queryClient.invalidateQueries(queryKey)
+        },
+        onError() {
+            localStorage.removeItem("token")
+        }
+    })
+}
+
+export const useRegister = () => useMutation(accounts.register)
+
+export const useLogout = () => {
+    const queryClient = useQueryClient()
+
+    return useMutation(async () => { }, {
+        async onMutate(id) {
+            localStorage.removeItem("token")
+            return queryClient.cancelQueries(queryKey)
+        },
+        async onSuccess() {
+            await queryClient.invalidateQueries(queryKey)
+        }
+    })
 }

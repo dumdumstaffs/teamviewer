@@ -1,6 +1,6 @@
 import { Diamond } from '@/components/icons/Diamond'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
-import { useAccount } from '@/hooks/use-account'
+import { useAccount, useLogout } from '@/hooks/use-account'
 import { ChartPieIcon, ChevronDownIcon, StarIcon } from "@heroicons/react/24/solid"
 import { motion } from "framer-motion"
 import Image from 'next/image'
@@ -15,13 +15,18 @@ type SidebarProps = {
 
 export function Sidebar({ open, toggleSidebar }: SidebarProps) {
     const router = useRouter()
-    const { account, signOut } = useAccount()
+
+    const account = useAccount()
+    const logoutMutation = useLogout()
 
     useLockBodyScroll(open)
 
     const logout = () => {
-        signOut()
-        router.push("/")
+        logoutMutation.mutate(undefined, {
+            onSuccess() {
+                router.push("/")
+            }
+        })
     }
 
     return (
@@ -87,7 +92,7 @@ export function Sidebar({ open, toggleSidebar }: SidebarProps) {
                 </div>
 
                 <div onClick={toggleSidebar} className="flex flex-col space-y-2 mt-10">
-                    {account ? (
+                    {account.isSuccess ? (
                         <button onClick={logout} className="w-full px-4 py-3 rounded-lg border border-gray-200 dark:border-zinc-800 bg-gray-200 dark:bg-zinc-800 text-sm font-semibold text-center">Logout</button>
                     ) : (
                         <>

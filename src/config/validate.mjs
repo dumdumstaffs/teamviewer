@@ -2,6 +2,7 @@ import { z } from "zod";
 
 const envSchema = z.object({
     APP_NAME: z.string(),
+    API_BASE: z.string(),
 })
 
 const validatedEnv = envSchema.safeParse(process.env);

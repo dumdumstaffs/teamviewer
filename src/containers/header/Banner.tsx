@@ -1,17 +1,22 @@
 import { Diamond } from '@/components/icons/Diamond'
 import { ThemeSwitcher } from '@/components/ThemeSwitcher'
-import { useAccount } from '@/hooks/use-account'
+import { useAccount, useLogout } from '@/hooks/use-account'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 export function Banner() {
     const router = useRouter()
-    const { account, signOut } = useAccount()
+
+    const account = useAccount()
+    const logoutMutation = useLogout()
 
     const logout = () => {
-        signOut()
-        router.push("/")
+        logoutMutation.mutate(undefined, {
+            onSuccess() {
+                router.push("/")
+            }
+        })
     }
 
     return (
@@ -34,7 +39,7 @@ export function Banner() {
                 <ThemeSwitcher />
                 <div className="border-l h-5" />
                 <Diamond className="w-5 h-5" />
-                {account ? (
+                {account.isSuccess ? (
                     <div className="flex items-center space-x-4">
                         <button onClick={logout} className="px-3 py-1.5 rounded-lg border border-blue-600 bg-blue-600 text-white text-xs font-medium">Logout</button>
                     </div>
