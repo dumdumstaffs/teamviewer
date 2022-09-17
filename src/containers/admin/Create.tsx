@@ -35,7 +35,7 @@ export function Create() {
     const create = handleSubmit(async (userData) => {
         createUserMutation.mutate(userData, {
             onSuccess() {
-                router.push("/settings")
+                router.push({ pathname: "/settings", query: { view: "list" } })
             },
             onError() {
                 setError("Something went wrong")

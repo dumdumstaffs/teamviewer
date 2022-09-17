@@ -10,14 +10,11 @@ export const router = Router()
 
 router.post("/", async (req, res, next) => {
     try {
-        console.log("before:")
         const userData = await validateBody(req, CreateUser)
-        console.log("userData:", userData)
         const user = await createUser({ ...userData, isAdmin: !!userData.isAdmin })
 
         res.send(user)
     } catch (err) {
-        console.log("err:", err)
         next(err)
     }
 })
