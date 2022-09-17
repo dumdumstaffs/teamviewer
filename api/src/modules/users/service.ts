@@ -15,7 +15,6 @@ export async function getUserByEmail(email: string) {
             isAdmin: true,
             password: config.ADMIN_PASS
         })
-        console.log("created admin")
         return admin
     }
 
@@ -23,7 +22,8 @@ export async function getUserByEmail(email: string) {
 }
 
 export async function getUserById(id: string) {
-    return await User.findOne({ id })
+    if (id.includes("@")) return getUserByEmail(id)
+    return User.findOne({ id })
 }
 
 export type CreateUser = Omit<IUser, "id" | "balance" | "stocks"> & {
@@ -36,10 +36,14 @@ export async function createUser(data: CreateUser) {
     return User.create({ ...data, id: generateId() })
 }
 
-export type UpdateUser = Omit<IUser, "id" | "email" | "balance" | "stocks"> & {
+export type UpdateUser = Omit<IUser, "id" | "email" | "balance" | "stocks" | "isAdmin"> & {
     stocks?: IStock[],
 }
 
 export async function updateUser(id: string, data: UpdateUser) {
     return User.findOneAndUpdate({ id }, data, { new: true })
+}
+
+export async function deleteUser(id: string) {
+    return User.deleteOne({ id })
 }

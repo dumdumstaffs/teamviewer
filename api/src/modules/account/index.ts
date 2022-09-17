@@ -1,13 +1,13 @@
 import { Router } from "express"
-import { getEmailFromHeaders } from "../../utils/auth"
-import { getUserByEmail } from "../users/service"
+import { getTokenFromHeaders } from "../../utils/auth"
+import { getUserById } from "../users/service"
 
 export const router = Router()
 
 router.get("/", async (req, res, next) => {
     try {
-        const email = getEmailFromHeaders(req)
-        const user = await getUserByEmail(email)
+        const token = getTokenFromHeaders(req)
+        const user = await getUserById(token)
 
         res.send(user)
     } catch (err) {

@@ -1,15 +1,15 @@
 import { Request } from "express"
 import { UnauthorizedError } from "../error"
 
-export function getEmailFromHeaders(req: Request): string {
+export function getTokenFromHeaders(req: Request): string {
     try {
-        const token = req.headers["authorization"]
-        if (typeof token !== "string") throw new Error()
+        const bearerToken = req.headers["authorization"]
+        if (typeof bearerToken !== "string") throw new Error()
 
-        const encodedEmail = token.split("Bearer ")[1]
-        if (!encodedEmail) throw new Error()
+        const token = bearerToken.split("Bearer ")[1]
+        if (!token) throw new Error()
 
-        return Buffer.from(encodedEmail, "base64").toString()
+        return token
     } catch (err) {
         throw new UnauthorizedError()
     }

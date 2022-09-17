@@ -1,6 +1,8 @@
 export type IStock = {
     name: string,
     profit: number,
+    symbol: string,
+    overview: string,
 }
 
 export type IUser = {
@@ -9,4 +11,5 @@ export type IUser = {
     name: string,
     balance: number,
     stocks: IStock[],
+    isAdmin: boolean,
 }

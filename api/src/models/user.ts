@@ -3,20 +3,30 @@ import { IStock, IUser } from "../types/user"
 
 export interface UserDocument extends Omit<IUser, "balance"> {
     password: string,
-    isAdmin: boolean,
 }
 export interface UserModel extends Model<UserDocument> { }
 
 const stocksSchema = new Schema<IStock>({
     name: String,
     profit: Number,
+    symbol: {
+        type: String,
+        unique: true,
+    },
+    overview: String,
 }, {
     _id: false,
 })
 
 const UserSchema = new Schema<UserDocument>({
-    email: String,
-    id: String,
+    email: {
+        type: String,
+        unique: true,
+    },
+    id: {
+        type: String,
+        unique: true,
+    },
     name: String,
     password: String,
     isAdmin: Boolean,
@@ -29,7 +39,6 @@ const UserSchema = new Schema<UserDocument>({
         transform(_doc, ret) {
             delete ret._id
             delete ret.password
-            delete ret.isAdmin
             return ret
         }
     }

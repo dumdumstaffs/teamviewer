@@ -33,7 +33,7 @@ export class NotFoundError extends ServerError {
 export class ValidationError extends ServerError {
     constructor(err: ZodError) {
         super(422, "Validation error", {
-            fields: err.flatten().fieldErrors
+            fields: err.issues
         })
     }
 }
