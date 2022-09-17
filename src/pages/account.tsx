@@ -1,8 +1,14 @@
+import { stockTemplates } from "@/data/stocks";
 import { useAccount } from "@/hooks/use-account";
 import { Layout } from "@/layouts/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import { MiniChart, SymbolOverview } from "react-ts-tradingview-widgets";
+
+const icon = (name: string) => {
+    const stock = stockTemplates.find(s => s.name.toLowerCase() === name)
+    return stock?.icon || "/icons/usa.svg"
+}
 
 export default function Account() {
     const account = useAccount()
@@ -33,7 +39,7 @@ export default function Account() {
                         {/* assets */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 py-4">
                             {account.data.stocks.map((stock) => (
-                                <AssetCard key={stock.symbol} name={stock.name} icon={stock.icon} price={stock.profit} />
+                                <AssetCard key={stock.symbol} name={stock.name} icon={icon(stock.name)} price={stock.profit} />
                             ))}
                         </div>
 

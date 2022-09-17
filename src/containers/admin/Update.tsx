@@ -11,11 +11,11 @@ export function Update() {
     const router = useRouter()
     const { id } = router.query
 
-    if (!id || typeof id !== "string") return null
-
-    const user = useUser(id)
+    const user = useUser(typeof id === "string" ? id : "")
     const removeUserMutation = useRemoveUser()
     const updateUserMutation = useUpdateUser()
+
+    if (!id || typeof id !== "string") return null
 
     const remove = () => {
         removeUserMutation.mutate(id, {
