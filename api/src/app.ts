@@ -1,6 +1,7 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express, { NextFunction, Request, Response } from "express";
+import helmet from "helmet";
 import * as db from "./db";
 import { ServerError } from "./error";
 import * as modules from "./modules";
@@ -11,6 +12,7 @@ db.connectDb()
 export const app = express()
 
 app.use(cors())
+app.use(helmet())
 app.use(express.json({ limit: "10mb" }))
 app.use(express.urlencoded({ limit: "10mb", extended: true }))
 
