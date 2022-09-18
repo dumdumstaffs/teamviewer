@@ -18,6 +18,11 @@ export default function Account() {
             {!account.isSuccess ? null : (
                 <div className="px-4 md:px-10 xl:px-20 py-12 dark:bg-neutral-900">
                     <h3 className="text-2xl mb-6">Account: #{account.data.id.toUpperCase()}</h3>
+                    <Link href="/settings">
+                        <a className="text-center py-2 px-4 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">
+                            Settings
+                        </a>
+                    </Link>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
                         {account.data.stocks.map((stock) => (
@@ -47,15 +52,11 @@ export default function Account() {
                         <p className="text-sm mt-4 text-gray-600 dark:text-zinc-200">You have a total of {account.data.balance.toLocaleString()} from {account.data.stocks.length} accounts.</p>
                     </div>
 
-                    <div className="w-full h-96 rounded-md overflow-hidden mt-12">
-                        <SymbolOverview autosize isTransparent symbols={account.data.stocks.map((stock) => [stock.name, stock.overview])} />
-                    </div>
-
-                    <div className="py-4">
-                        <Link href="/settings">
-                            <a className="block text-center w-full py-3 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">Settings</a>
-                        </Link>
-                    </div>
+                    {account.data.stocks.length && (
+                        <div className="w-full h-96 rounded-md overflow-hidden mt-12">
+                            <SymbolOverview autosize isTransparent symbols={account.data.stocks.map((stock) => [stock.name, stock.overview])} />
+                        </div>
+                    )}
                 </div>
             )}
         </Layout>
