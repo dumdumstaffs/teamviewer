@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
 import { Account } from "@/data/accounts"
+import { findStock, stocks } from "@/data/stocks"
 import { useRemoveUser, useUpdateUser, useUser } from "@/hooks/use-users"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/router"
@@ -80,10 +81,8 @@ export function Update() {
 }
 
 export const addStockSchema = z.object({
-    name: z.string(),
+    stock: z.string(),
     profit: z.number(),
-    symbol: z.string(),
-    overview: z.string(),
 })
 
 const AddStock = ({ user }: { user: Account }) => {
@@ -95,10 +94,18 @@ const AddStock = ({ user }: { user: Account }) => {
 
     const updateUserMutation = useUpdateUser()
 
-    const addStock = handleSubmit(async (stockData) => {
+    const addStock = handleSubmit(async ({ stock, profit }) => {
+
+        const stockTemplate = findStock(stock)
+        if (!stockTemplate) return console.log("stock not found!")
+        const { name, overview, symbol } = stockTemplate
+
         updateUserMutation.mutate({
             id: user.id,
-            user: { ...user, stocks: [...user.stocks, stockData] }
+            user: {
+                ...user,
+                stocks: [...user.stocks, { profit, name, overview, symbol }]
+            }
         }, {
             onSuccess() {
                 router.push({ pathname: "/settings", query: { view: "update", id: user.id } })
@@ -113,13 +120,16 @@ const AddStock = ({ user }: { user: Account }) => {
             </div>
 
             <div className="py-2">
-                <Input
-                    label="Name"
-                    placeholder="Name"
-                    className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    {...register("name")}
-                    error={errors.name?.message}
-                />
+                <label className="text-sm font-medium mb-1">Stock</label>
+                <select
+                    placeholder="Stock"
+                    className="w-full bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    {...register("stock")}
+                >
+                    {stocks.map(stock => (
+                        <option key={stock.name} value={stock.name}>{stock.name}</option>
+                    ))}
+                </select>
             </div>
             <div className="py-2">
                 <Input
@@ -129,24 +139,6 @@ const AddStock = ({ user }: { user: Account }) => {
                     className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     {...register("profit", { valueAsNumber: true })}
                     error={errors.profit?.message}
-                />
-            </div>
-            <div className="py-2">
-                <Input
-                    label="Symbol"
-                    placeholder="Symbol"
-                    className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    {...register("symbol")}
-                    error={errors.symbol?.message}
-                />
-            </div>
-            <div className="py-2">
-                <Input
-                    label="Overview"
-                    placeholder="Overview"
-                    className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    {...register("overview")}
-                    error={errors.overview?.message}
                 />
             </div>
 

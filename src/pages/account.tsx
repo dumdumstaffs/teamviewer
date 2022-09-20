@@ -1,14 +1,11 @@
-import { stockTemplates } from "@/data/stocks";
+import { findStock } from "@/data/stocks";
 import { useAccount } from "@/hooks/use-account";
 import { Layout } from "@/layouts/Layout";
 import Image from "next/image";
 import Link from "next/link";
 import { MiniChart, SymbolOverview } from "react-ts-tradingview-widgets";
 
-const icon = (name: string) => {
-    const stock = stockTemplates.find(s => s.name.toLowerCase() === name)
-    return stock?.icon || "/icons/usa.svg"
-}
+const stockIcon = (name: string) => findStock(name)?.icon || "/icons/usa.svg"
 
 export default function Account() {
     const account = useAccount()
@@ -19,14 +16,14 @@ export default function Account() {
                 <div className="px-4 md:px-10 xl:px-20 py-12 dark:bg-neutral-900">
                     <h3 className="text-2xl mb-6">Account: #{account.data.id.toUpperCase()}</h3>
                     <Link href="/settings">
-                        <a className="text-center py-2 px-4 mt-4 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">
+                        <a className="inline-block text-center py-2 px-4 mt-4 mb-8 rounded-md border border-blue-600 bg-blue-600 text-sm text-white font-medium">
                             Settings
                         </a>
                     </Link>
 
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
-                        {account.data.stocks.map((stock) => (
-                            <div key={stock.symbol} className="border dark:border-zinc-700 rounded-md overflow-hidden">
+                        {account.data.stocks.map((stock, i) => (
+                            <div key={stock.symbol + stock.profit + i} className="border dark:border-zinc-700 rounded-md overflow-hidden">
                                 <MiniChart symbol={stock.symbol} autosize isTransparent />
                             </div>
                         ))}
@@ -43,8 +40,8 @@ export default function Account() {
 
                         {/* assets */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 py-4">
-                            {account.data.stocks.map((stock) => (
-                                <AssetCard key={stock.symbol} name={stock.name} icon={icon(stock.name)} price={stock.profit} />
+                            {account.data.stocks.map((stock, i) => (
+                                <AssetCard key={stock.symbol + stock.profit + i} name={stock.name} icon={stockIcon(stock.name)} price={stock.profit} />
                             ))}
                         </div>
 
