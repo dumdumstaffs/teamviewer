@@ -27,7 +27,6 @@ export async function getUserById(id: string) {
 }
 
 export type CreateUser = Omit<IUser, "id" | "balance" | "stocks"> & {
-    stocks?: IStock[],
     isAdmin?: boolean,
     password: string
 }

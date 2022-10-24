@@ -27,6 +27,7 @@ app.use((_req, _res) => {
 })
 
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    console.log(err)
     if (err instanceof ServerError) {
         return res.status(err.status).send(err)
     }

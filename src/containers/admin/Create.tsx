@@ -11,13 +11,6 @@ import { z } from "zod"
 export const createSchema = z.object({
     email: z.string().email(),
     name: z.string(),
-    stocks: z.array(z.object({
-        name: z.string(),
-        profit: z.number(),
-        symbol: z.string(),
-        icon: z.string(),
-        overview: z.string(),
-    })).optional(),
     password: z.string(),
     isAdmin: z.boolean().optional()
 })
