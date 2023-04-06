@@ -92,17 +92,19 @@ export default function Account() {
                 Transaction history
               </h4>
 
-              <select
-                className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                value={stock}
-                onChange={(e) => setStock(e.target.value)}
-              >
-                {account.data.stocks.map((stock) => (
-                  <option key={stock.name} value={stock.name}>
-                    {stock.name}
-                  </option>
-                ))}
-              </select>
+              {account.data.stocks.length > 0 && (
+                <select
+                  className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  value={stock}
+                  onChange={(e) => setStock(e.target.value)}
+                >
+                  {account.data.stocks.map((stock) => (
+                    <option key={stock.name} value={stock.name}>
+                      {stock.name}
+                    </option>
+                  ))}
+                </select>
+              )}
             </div>
 
             {deposits.length ? (
@@ -130,7 +132,7 @@ export default function Account() {
             )}
           </div>
 
-          {account.data.stocks.length && (
+          {account.data.stocks.length > 0 && (
             <div className="w-full h-96 rounded-md overflow-hidden mt-12">
               <SymbolOverview
                 autosize
