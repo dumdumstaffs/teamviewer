@@ -14,5 +14,9 @@ export const UpdateUser = z.object({
         profit: z.number(),
         symbol: z.string(),
         overview: z.string(),
+        deposits: z.array(z.object({
+            amount: z.number(),
+            date: z.string().transform(val => new Date(val)),
+        })),
     })),
 })

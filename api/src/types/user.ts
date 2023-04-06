@@ -3,6 +3,13 @@ export type IStock = {
     profit: number,
     symbol: string,
     overview: string,
+    deposits: IDeposit[]
+}
+
+export type IDeposit = {
+    id: string,
+    amount: number,
+    date: Date,
 }
 
 export type IUser = {

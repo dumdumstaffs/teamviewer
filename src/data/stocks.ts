@@ -3,6 +3,13 @@ export type Stock = {
     profit: number,
     symbol: string,
     overview: string,
+    deposits: Deposit[]
+}
+
+export type Deposit = {
+    id: string,
+    amount: number,
+    date: string,
 }
 
 type StockTemplate = {

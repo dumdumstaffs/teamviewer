@@ -1,6 +1,6 @@
 import { config } from "../../config"
 import { User } from "../../models/user"
-import { IStock, IUser } from "../../types/user"
+import { IDeposit, IStock, IUser } from "../../types/user"
 import { generateId } from "../../utils/id"
 
 export async function getUserByEmail(email: string) {
@@ -36,7 +36,7 @@ export async function createUser(data: CreateUser) {
 }
 
 export type UpdateUser = Omit<IUser, "id" | "email" | "balance" | "stocks" | "isAdmin"> & {
-    stocks?: IStock[],
+    stocks?: (Omit<IStock, "deposits"> & { deposits: Omit<IDeposit, "id">[] })[],
 }
 
 export async function updateUser(id: string, data: UpdateUser) {
