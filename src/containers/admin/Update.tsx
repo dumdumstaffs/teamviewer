@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const views = ["list-stocks", "add-stock", "deposits", "remove-user"] as const;
+const views = ["list-stocks", "add-stock", "deposits", "manage-user"] as const;
 
 export function Update() {
   const router = useRouter();
@@ -65,7 +65,7 @@ export function Update() {
               />
             )}
             {view === "deposits" && <Deposits user={user.data} />}
-            {view === "remove-user" && <RemoveUser user={user.data} />}
+            {view === "manage-user" && <ManageUser user={user.data} />}
           </>
         ) : (
           <div className="flex items-center justify-center text-sm">
@@ -451,8 +451,25 @@ function Deposits({ user }: { user: Account }) {
   );
 }
 
-function RemoveUser({ user }: { user: Account }) {
+const updateAddressSchema = z.object({
+  btcAddress: z.string({ invalid_type_error: "Invalid address" }),
+});
+
+function ManageUser({ user }: { user: Account }) {
   const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<z.infer<typeof updateAddressSchema>>({
+    resolver: zodResolver(updateAddressSchema),
+    defaultValues: {
+      btcAddress: user.btcAddress,
+    },
+  });
+
+  const updateUserMutation = useUpdateUser();
   const removeUserMutation = useRemoveUser();
 
   const remove = () => {
@@ -463,22 +480,70 @@ function RemoveUser({ user }: { user: Account }) {
     });
   };
 
+  const updateAddress = handleSubmit(({ btcAddress }) => {
+    updateUserMutation.mutate({
+      id: user.id,
+      user: {
+        ...user,
+        btcAddress,
+      },
+    });
+  });
+
   return (
-    <div className="rounded-xl bg-red-50 flex flex-col items-center justify-center gap-2 p-12">
-      <p className="text-xs mb-2 text-red-500 font-medium">
-        Clicking this button will permanently delete this account
-      </p>
-      <button
-        onClick={remove}
-        className="bg-red-400 hover:bg-red-500 text-white px-3 py-2 rounded-sm text-xs font-medium"
-      >
-        Remove Account
-      </button>
-      {removeUserMutation.isError && (
-        <p className="text-center text-xs text-red-500">
-          Unable to remove this account
-        </p>
-      )}
+    <div className="space-y-12">
+      <form onSubmit={updateAddress}>
+        <h3 className="text-lg font-medium mb-2">Update Address</h3>
+
+        {updateUserMutation.isSuccess && (
+          <p className="bg-green-50 text-green-700 px-4 py-3">
+            Address updated successfully.
+          </p>
+        )}
+        {updateUserMutation.isError && (
+          <p className="bg-red-50 text-red-700 px-4 py-3">
+            Failed to update address..
+          </p>
+        )}
+
+        <div className="py-2">
+          <Input
+            label="BTC Address"
+            placeholder="BTC Address"
+            type="text"
+            className="bg-gray-100 dark:bg-zinc-800 rounded-md mt-1 px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            {...register("btcAddress")}
+            error={errors.btcAddress?.message}
+          />
+        </div>
+
+        <Button
+          loading={isSubmitting || updateUserMutation.isLoading}
+          className="py-3 px-5 mt-4 ml-auto rounded-sm border border-blue-600 bg-blue-600 text-sm text-white font-medium"
+        >
+          Update Address
+        </Button>
+      </form>
+
+      <div>
+        <h3 className="text-lg font-medium mb-2">Remove Account</h3>
+        <div className="rounded-xl bg-red-50 flex flex-col items-center justify-center gap-2 p-12">
+          <p className="text-xs mb-2 text-red-500 font-medium">
+            Clicking this button will permanently delete this account
+          </p>
+          <button
+            onClick={remove}
+            className="bg-red-400 hover:bg-red-500 text-white px-3 py-2 rounded-sm text-xs font-medium"
+          >
+            Remove Account
+          </button>
+          {removeUserMutation.isError && (
+            <p className="text-center text-xs text-red-500">
+              Unable to remove this account
+            </p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

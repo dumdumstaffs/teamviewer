@@ -46,6 +46,7 @@ const UserSchema = new Schema<UserDocument>({
     password: String,
     isAdmin: Boolean,
     stocks: [stocksSchema],
+    btcAddress: String,
 }, {
     timestamps: true,
     toJSON: {

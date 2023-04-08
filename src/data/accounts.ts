@@ -5,6 +5,7 @@ export type Account = {
     id: string,
     name: string,
     balance: number,
-    stocks: Stock[],
     isAdmin: boolean,
+    stocks: Stock[],
+    btcAddress?: string,
 }

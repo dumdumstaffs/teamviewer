@@ -46,7 +46,7 @@ router.put("/:id", async (req, res, next) => {
         if (!user) throw new NotFoundError("User not found")
 
         const userData = await validateBody(req, UpdateUser)
-        const updatedUser = await updateUser(user.id, { name: userData.name, stocks: userData.stocks })
+        const updatedUser = await updateUser(user.id, userData)
 
         res.send(updatedUser)
     } catch (err) {

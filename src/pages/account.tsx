@@ -88,9 +88,7 @@ export default function Account() {
 
           <div className="mt-12 space-y-2">
             <div className="flex items-center justify-between">
-              <h4 className="text-lg font-medium px-4 py-2">
-                Transaction history
-              </h4>
+              <h4 className="text-lg font-medium py-2">Transaction history</h4>
 
               {account.data.stocks.length > 0 && (
                 <select
@@ -142,6 +140,37 @@ export default function Account() {
                   stock.overview,
                 ])}
               />
+            </div>
+          )}
+
+          {/* wallet addres */}
+          {account.data.btcAddress && (
+            <div className="mt-12 space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-lg font-medium py-2">Wallet Address</h4>
+              </div>
+
+              <div className="flex flex-col md:flex-row md:items-center justify-between">
+                <div className="text-lg hidden md:block">
+                  <p>BTC Wallet</p>
+                </div>
+
+                <div className="md:w-1/2 flex flex-col items-center px-2 py-10 rounded-xl bg-gray-50 dark:bg-zinc-800">
+                  <div className="mb-5">
+                    <Image
+                      src="/icons/btc.svg"
+                      width={56}
+                      height={56}
+                      alt="BTC"
+                      className="rounded-full"
+                    />
+                  </div>
+
+                  <p className="text-center break-all">
+                    {account.data.btcAddress}
+                  </p>
+                </div>
+              </div>
             </div>
           )}
         </div>

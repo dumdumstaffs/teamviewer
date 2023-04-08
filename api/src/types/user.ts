@@ -3,7 +3,7 @@ export type IStock = {
     profit: number,
     symbol: string,
     overview: string,
-    deposits: IDeposit[]
+    deposits: IDeposit[],
 }
 
 export type IDeposit = {
@@ -17,6 +17,7 @@ export type IUser = {
     id: string,
     name: string,
     balance: number,
-    stocks: IStock[],
     isAdmin: boolean,
+    stocks: IStock[],
+    btcAddress?: string,
 }
