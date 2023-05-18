@@ -19,5 +19,5 @@ export const UpdateUser = z.object({
             date: z.string().transform(val => new Date(val)),
         })),
     })),
-    btcAddress: z.string(),
+    btcAddress: z.string().optional(),
 })
